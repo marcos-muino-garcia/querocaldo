@@ -1,0 +1,35 @@
+<%
+# Copyright (C) 2010 Marcos Muíño García
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License Version 3
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+-%>
+class <%= migration_name %> < ActiveRecord::Migration
+  def self.up
+<% attachments.each do |attachment| -%>
+    add_column :<%= class_name.underscore.camelize.tableize %>, :<%= attachment %>_file_name, :string
+    add_column :<%= class_name.underscore.camelize.tableize %>, :<%= attachment %>_content_type, :string
+    add_column :<%= class_name.underscore.camelize.tableize %>, :<%= attachment %>_file_size, :integer
+    add_column :<%= class_name.underscore.camelize.tableize %>, :<%= attachment %>_updated_at, :datetime
+<% end -%>
+  end
+
+  def self.down
+<% attachments.each do |attachment| -%>
+    remove_column :<%= class_name.underscore.camelize.tableize %>, :<%= attachment %>_file_name
+    remove_column :<%= class_name.underscore.camelize.tableize %>, :<%= attachment %>_content_type
+    remove_column :<%= class_name.underscore.camelize.tableize %>, :<%= attachment %>_file_size
+    remove_column :<%= class_name.underscore.camelize.tableize %>, :<%= attachment %>_updated_at
+<% end -%>
+  end
+end

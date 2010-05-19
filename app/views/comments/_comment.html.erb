@@ -1,0 +1,31 @@
+<%
+# Copyright (C) 2010 Marcos Muíño García
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License Version 3
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+-%>
+<% div_for comment do -%>
+  <div class="comment">
+      <span class="submit_info">
+		<%= t 'comment.ago', :visitor => comment.user_name, :posted_ago => time_ago_in_words(comment.created_at) -%>
+		<% if comment.lat? %>
+		 	<%= t 'comment.where', :distance => comment.distance_to_node + ' km.' %>
+		<% end %>
+	</span><br/>
+      <%= comment.body %>
+	  <% show_destroy = false if show_destroy.nil? %>
+	  <% if show_destroy %>
+		<%= link_to t('destroy'), comment, :confirm => t('confirmation_question'), :method => :delete %>
+	  <% end %>
+  </div>
+<% end %>

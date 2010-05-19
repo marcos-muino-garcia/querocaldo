@@ -1,0 +1,45 @@
+# Copyright (C) 2010 Marcos Muíño García
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License Version 3
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+futurama:
+  id: 1
+  title: Isnt futurama awesome?
+  subtitle: It really is, isnt it.
+  content: I like futurama
+  created_at: <%= 1.day.ago.to_s(:db) %>
+  updated_at:
+  
+harvey_birdman:
+  id: 2
+  title: Harvey Birdman is the king of all men
+  subtitle: yup
+  content: He really is
+  created_at: <%= 2.hours.ago.to_s(:db) %>
+  updated_at:
+
+rails:
+  id: 3
+  project_id: 1
+  title: Rails is nice
+  subtitle: It makes me happy
+  content: except when I have to hack internals to fix pagination. even then really.
+  created_at: <%= 20.minutes.ago.to_s(:db) %>
+
+ar:
+  id: 4
+  project_id: 1
+  title: ActiveRecord sometimes freaks me out
+  content: "I mean, what's the deal with eager loading?"
+  created_at: <%= 15.minutes.ago.to_s(:db) %>

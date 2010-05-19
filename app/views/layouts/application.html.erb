@@ -1,0 +1,159 @@
+<%
+# Copyright (C) 2010 Marcos Muíño García
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License Version 3
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+-%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="gl" lang="gl">
+<head>
+	<title><%=t 'head.title' %><%= yield :head_title_contrib %></title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Marcos Muíño García"/>
+	<meta name="description" content="<%=t 'head.description' %>"/>
+	<meta name="keywords" content="<%=t 'head.keywords' %>"/>
+
+	<%= stylesheet_link_tag 'scaffold' %>
+	<%= stylesheet_link_tag 'styles' %>
+	
+	<!--[if IE ]>
+	<%= stylesheet_link_tag 'styles_ie' %>
+	<![endif]-->
+
+	<%= javascript_include_tag :defaults %>
+	<%= javascript_include_tiny_mce_if_used %>
+	<%= tiny_mce if using_tiny_mce? %>
+	
+	<!-- Fancybox stuff -->
+	<script type="text/javascript" src="/javascripts/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
+	<link rel="stylesheet" href="/javascripts/fancybox/jquery.fancybox-1.3.1.css" type="text/css" media="screen" />
+	<!--[if IE ]>
+	<link rel="stylesheet" href="/javascripts/fancybox/jquery.fancybox-ie-1.3.1.css" type="text/css" media="screen" />
+	<![endif]-->
+
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true&amp;key=<%=GOOGLE_MAPS_KEY%>" type="text/javascript"></script>
+	<%= yield :head_contrib %>
+	
+    <% if 'production'.eql?(RAILS_ENV) -%>
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-16466306-1']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+    <% end -%>	
+</head>
+<body>
+<div id="top_container">
+	<div id="header">
+		<div id="logo">
+			<h1><%= link_to t('home.title'), :controller => 'main' %></h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><%= active_link_to t('menu.home'), root_path, :active => { :when => /^\/$|^\/..\/$/ }  %></li>
+				<li><%= active_link_to t('menu.node.add'), :controller => 'nodes', :action => 'new' %></li>
+				<li><%= active_link_to t('menu.contact'), :controller => 'contact' %></li>
+			</ul>
+		</div>	
+	</div>	
+	<div id="language_links">
+	    <ul>
+	        <% @available_locales.each do |key, value| -%>
+	            <li><%=link_to h(value), (params || []).merge({:locale => key}) -%></li>
+	        <% end -%>
+	    </ul>	
+	</div>
+</div>
+<div id="content">
+	<div id="posts">
+		<div class="post">
+			<%= yield %>
+		</div>
+	</div>
+	<div id="bar">
+		<div id="info" class="boxed boxed2">
+			<h2><%= t 'home.info.title' %></h2>
+			<ul>
+				<li class="clob">
+					<%= t 'home.info.content1' %>
+				</li>
+				<li class="clob">
+					<%= t 'home.info.content2' %>
+				</li>
+				<li class="clob">
+					<%= t 'home.info.content3' %> <a id="flyer_trigger" href="#flyer"><%= t 'home.info.flyer' %></a>
+
+					<div style="display:none">
+						<div id="flyer">
+							<%= image_tag '/images/querocaldo_flyer.png' %>
+							<br/>
+							<%= link_to t('download'), '/images/querocaldo_flyer.png' %>
+						</div>
+					</div>
+					
+					<script type="text/javascript" charset="utf-8">
+						$(document).ready(function() {
+							$("a#flyer_trigger").fancybox({
+								'hideOnContentClick': true,
+								'overlayOpacity': 0.4
+							});
+						});
+					</script>					
+				</li>
+			</ul>
+		</div>
+		<%= yield :last_nodes %>
+	</div>
+</div>
+<div style="display:none">
+	<div id="copyright">
+		<h2>Copyright (C) 2010 Marcos Muíño García</h2>
+		<div id="terms_of_use">
+		  <h3><%= t 'terms.title' -%></h3>
+		  <p><%= t 'terms.creative_commons.p1' -%></p>
+		  <p><%= t 'terms.creative_commons.p2' -%></p>
+		  <p><%= t 'terms.creative_commons.p3' -%></p>
+		  <p><%= t 'terms.creative_commons.p4' -%></p>
+		  <p><%= t 'terms.creative_commons.p5' -%></p>
+		  <p><%= t 'terms.creative_commons.p6' -%></p>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		$("a.copyright_trigger").fancybox({
+			'hideOnContentClick': true,
+			'overlayOpacity': 0.4
+		});
+	});
+</script>					
+<div id="footer">
+	<p id="copy">
+		<a class="copyright_trigger" href="#copyright">&copy; <%=t 'footer.copyright' %></a>
+		- <a href="http://validator.w3.org/check?uri=referer" title="Validate XHTML">xhtml</a>
+        |
+        <a href="http://jigsaw.w3.org/css-validator/check/referer?warning=no&amp;profile=css3" title="Validate CSS">css</a>
+		- Designed by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>
+	</p>
+	<p id="feed"><a href="/rss" id="rss">RSS Feed</a></p>
+</div>
+</body>
+</html>
+

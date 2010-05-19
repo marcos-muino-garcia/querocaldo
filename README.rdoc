@@ -1,0 +1,7 @@
+= QueroCaldo.org
+
+== Que é QueroCaldo.org?
+
+QueroCaldo.org é un sitio en Internet desenvolvido para a xeolocalización, 
+descrición, avaliación e promoción de establecementos de hostalería, e similares, 
+nos cales as comidas típicas de Galicia teñen un lugar privilexiado dentro do menú.

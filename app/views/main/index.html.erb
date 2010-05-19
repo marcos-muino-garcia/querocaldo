@@ -1,0 +1,82 @@
+<%
+# Copyright (C) 2010 Marcos Muíño García
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License Version 3
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+-%>
+<% content_for(:last_nodes) do %>
+	<%= render(:partial => "layouts/last_nodes") -%>
+<% end %>
+
+<% content_for(:head_contrib) do %>
+<script type="text/javascript">
+    //<![CDATA[
+	if (GBrowserIsCompatible()) {
+		nodes = <%= @nodes.to_json(:only=>[:id,:title,:lat,:lng,:node_type])%>;
+		$(window).bind('unload', function() { GUnload() });
+		$(window).bind('load', function() {
+			initMap();
+			LOCALE='<%= I18n.locale %>';
+			GEvent.addListener(map, 'click', globalMapClick);
+			if(nodes){
+				createNodeMarkers(nodes);
+				if(supportNavigatorGeolocation()){
+					processUserLocation(nodes);
+				}else{
+					$('#nearestInfo').html("<%= t 'browser.no_compatible.geolocation' %> <%= t 'browser.recomentation' %>");
+				}
+			} else {
+				map.setCenter(new GLatLng(MAIN_LAT, MAIN_LNG), 7);
+			}
+		});
+	} else {
+		$(window).bind('load', function() {
+			$('#nearestInfo').html("<%= t 'browser.no_compatible.map' %> <%= t 'browser.recomentation' %>");
+		});
+	}
+    //]]>
+</script>
+<% end %>
+<div id="mainContent">
+	<p id="nearestInfo">
+        <%= t 'home.nearest_info', :distance => '<span id="nearestDistanceSpan">...</span><sup>(1)</sup>', :title => '<a id="nearestNodeAnchor" href=""><span id="nearestNodeSpan">...</span></a>' %>
+    </p>
+    <div id="map">
+    </div>
+    <div id="distance_alert">
+        <sup>
+            (1)
+        </sup>
+        <%= t 'home.map.distance_alert' %>
+    </div>
+	<div id="hidden_info">
+		<span id="popupPre" style="visibility: hidden;"><%= t 'home.map.popup.pre' %>
+		</span>
+		<span id="popupPost" style="visibility: hidden;"><%= t 'home.map.popup.post' %>
+		</span>
+		<span id="popupDetails" style="visibility: hidden;"><%= t 'home.map.popup.details' %>
+		</span>
+		<span id="popupUser" style="visibility: hidden;"><%= t 'home.map.popup.user' %>
+		</span>
+	</div>
+</div>
+<div id="comments">
+	<h2 class="title"><%= t 'home.comments' %></h2>
+	<ul>
+<% for comment in @last_comments %>
+		<li class="comment">
+			<%= link_to comment.node.title, comment.node %>:<br/> <%= comment.body %>
+		</li>
+<% end %>
+	</ul>
+</div>

@@ -1,0 +1,6 @@
+.DS_Store
+public/system/images
+log/*.log
+tmp/**/*
+doc/api
+doc/app

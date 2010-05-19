@@ -1,0 +1,173 @@
+<%
+# Copyright (C) 2010 Marcos Muíño García
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License Version 3
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+-%>
+<% content_for(:head_contrib) do %>
+<script type="text/javascript">
+//<![CDATA[
+	$(window).bind('unload', function() { GUnload() });
+	var n = <%= @node.to_json(:only=>[:id, :title, :lat, :lng,:node_type])%>.node;
+	$(window).bind('load', function() {
+		initMap();
+		if(n.lat){
+			createNodeMarker(n);
+			centerMap(n.lat, n.lng);
+		} else {
+			defaultInUser();
+			GEvent.addListener(map, 'click', editNodeMapClick);
+		}
+	});
+
+    function flipNodeType(node_type_id){
+        checkBoxElement = $(node_type_id);
+        if (checkBoxElement.checked) {
+            options = {
+                startcolor: '#fff97d',
+                endcolor: '#ffffff',
+                restorecolor: '#ffffff'
+            };
+        }
+        else {
+            options = {
+                startcolor: '#ffffff',
+                endcolor: '#fff97d',
+                restorecolor: '#fff97d'
+            };
+        }
+        new Effect.Highlight($(node_type_id).parentNode, options);
+        checkBoxElement.checked = !checkBoxElement.checked;
+    }
+//]]>
+</script>
+<% end %>
+<% form_for(@node) do |f| %>
+
+<%= f.error_messages %>
+
+<div class="input_group">
+    <fieldset id="node_type_fieldset">
+		<legend><%= t 'node.type.title' %></legend>
+	<ul id="node_type_radio_group">
+	    <% Node.find_node_types.each do |type| %>
+	      <li id="<%= 'node_type_' + type %>_container">
+			<%= f.radio_button :node_type, type %>
+		 	<label for="<%= 'node_node_type_' + type %>"><%= t 'node.type.' + type %></label>
+		  </li>
+	    <% end %>
+	</ul>
+	</fieldset>
+</div>
+<div class="input_group">
+	<label for="node_title">
+    	<%= t 'node.title' %>
+	</label>
+	<br/>
+    <%= f.text_field :title, :size => '35' %>
+</div>
+<div class="input_group">
+	<label for="node_summary">
+    	<%= t 'node.summary' %>
+	</label>
+	<br/>
+    <%= f.text_area :summary, :size => '50x3' %>
+</div>
+<div class="input_group">
+	<label for="node_body">
+    	<%= t 'node.body' %>
+	</label>
+	<a id="show_sample_trigger" href="#show_sample"><%= t 'node.show_sample.title' %></a>
+	<div style="display:none">
+		<div id="show_sample">
+			<center>
+			<div class="title">
+					<%= t 'node.show_sample.head' %>
+			</div>
+			</center>
+			<fieldset>
+				<legend>
+					<%= @sample_node.title %>
+				</legend>
+				<%= @sample_node.body %>
+			</fieldset>
+		</div>
+	</div>
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			$("a#show_sample_trigger").fancybox({
+				'hideOnContentClick': true,
+				'overlayOpacity': 0.4
+			});
+		});
+	</script>	
+	<br/>
+    <%= f.text_area :body, :class => "mceEditor", :size => '80x50' %>
+</div>
+<div class="input_group">
+    <fieldset>
+        <legend>
+           <%= t 'node.position' %>
+        </legend>
+		<input type="text" id="address_input" size="45"/>
+		<br/>
+		<input class="button_search" type="button" onclick="centerMapInAddress($('#address_input').val());" value="<%= t 'node.search' %>"/>
+		<input class="button_clean" type="button" onclick="$('#address_input').val(null);$('#node_lat').val(null); $('#node_lng').val(null); map.clearOverlays();" value="<%= t 'node.clean_map' %>"/>
+        <script type="text/javascript">
+//<![CDATA[
+            $('#address_input').keypress(function(evt){
+                var evt = (evt) ? evt : ((event) ? event : null);
+                var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+                if ((evt.keyCode == 13) && (node.type == 'text')) {
+                    centerMapInAddress($('#address_input').val());
+                    return false;
+                }
+            });
+//]]>
+        </script>
+        <div id="map" style="width:600px;height:350px"></div>
+    </fieldset>
+	<div id="hidden_info">
+		<span id="alertAddressPre" style="visibility: hidden;"><%= t 'home.map.alert.address_not_found.pre' %></span>
+		<span id="alertAddressPost" style="visibility: hidden;"><%= t 'home.map.alert.address_not_found.post' %></span>
+	</div>
+    <%= f.hidden_field :lat %>
+    <%= f.hidden_field :lng %>	
+</div>
+<div class="input_group">
+    <%= f.check_box(:accept_terms)%>
+	<label for="node_accept_terms">
+    	<%= t 'terms.accept' %> <a id="terms_trigger" href="#terms"><%= t 'terms.title' %></a>
+	</label>
+	<div style="display:none">
+		<div id="terms">
+  			<%= render :partial => 'terms' -%>
+		</div>
+	</div>
+	
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			$("a#terms_trigger").fancybox({
+				'hideOnContentClick': true,
+				'overlayOpacity': 0.4
+			});
+		});
+	</script>					
+</div>
+<div class="input_group">
+	<%= recaptcha_tags :display => {:theme => 'white'} %>
+</div>
+<div class="input_group">	
+    <%= f.submit t('node.save'), :class => 'button_save' %>
+</div>
+<% end %>

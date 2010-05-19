@@ -1,0 +1,39 @@
+<%
+# Copyright (C) 2010 Marcos Muíño García
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License Version 3
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+-%>
+<% content_for(:head_title_contrib) do %>: <%= t 'node.list.title' %><% end %>
+<h2 class="title"><%= t 'node.list.title' %></h2>
+<div id="node_list">
+	<table>
+	  <tr>
+	    <th><%= t 'node.type.title' %></th>
+	    <th><%= t 'node.title' %></th>
+	    <th><%= t 'node.summary' %></th>
+	    <th><%= t 'node.edit.title' %></th>
+	    <th><%= t 'node.destroy.title' %></th>
+	  </tr>
+
+	<% @nodes.each do |node| %>
+	  <tr>
+	  	<td><%= image_tag '/images/node_type_' + node.node_type + '.png', :size => '40x40' %></td>
+	    <td><%= link_to node.title, node %></td>
+	  	<td><%=h node.summary %></td>
+	    <td><%= link_to t('edit'), edit_node_path(node) %></td>
+	    <td><%= link_to t('destroy'), node, :confirm => t('confirmation_question'), :method => :delete %></td>
+	  </tr>
+	<% end %>
+	</table>
+</div>

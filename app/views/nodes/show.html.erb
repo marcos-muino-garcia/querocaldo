@@ -1,0 +1,92 @@
+<%
+# Copyright (C) 2010 Marcos Muíño García
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License Version 3
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+-%>
+<% content_for(:head_title_contrib) do %> - <%=h @node.title %><% end %>
+<% content_for(:head_contrib) do %>
+<script type="text/javascript">
+//<![CDATA[
+	$(window).bind('unload', function() { GUnload() });
+	var n = <%= @node.to_json(:only=>[:id, :title, :lat, :lng,:node_type])%>.node;
+	$(window).bind('load', function() {
+		initMap();
+		GEvent.addListener(map, 'click', showCoordsMapClick);		
+		createNodeMarker(n);
+		centerMap(n.lat, n.lng);
+		setUserPositionFormFields('#comment_lat', '#comment_lng');
+	});
+//]]>
+</script>
+<% end %>
+
+<h2 id="node_title" class="title"><%=h @node.title %></h2>
+<div>
+	<p>
+    	<%=h @node.summary %>
+	</p>
+</div>
+<div id="map" style="width:600px;height:350px"></div>
+<div id="node_page">
+	<fieldset>
+		<legend>
+			<%= t 'node.body' %>
+		</legend>
+    	<%= @node.body %>
+	</fieldset>
+</div>
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style">
+	<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4bef43d76cef6c22" class="addthis_button_compact"><%= t 'node.share'%></a>
+	<span class="addthis_separator">|</span>
+	<a class="addthis_button_twitter"></a>
+	<a class="addthis_button_facebook"></a>
+	<a class="addthis_button_email"></a>
+	<a class="addthis_button_google"></a>
+	<a class="addthis_button_myspace"></a>
+</div>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4bef43d76cef6c22"></script>
+<!-- AddThis Button END -->
+<div id="comments">
+	<h2 class="title"><%= t 'comments.title' %></h2>
+
+	<div id="comment_list">
+	  <%= render :partial => @node.comments %>
+    </div>
+    <div id="comment_errors"></div>
+    <% remote_form_for [@node, Comment.new] do |f| %>
+      <%= f.error_messages %>
+
+	  <div class="title">
+	    <%= t 'node.comment.new' %>
+	  </div>
+	  <div>
+        <%= f.label :user_name, t('node.comment.user.name') %><br/>
+	  	<%= f.text_field :user_name, :size => 30 %>
+	  </div>
+	  <div>
+        <%= f.label :user_email, t('node.comment.user.address') %><br/>
+	  	<%= f.text_field :user_email, :size => 30 %>
+	  </div>
+      <div>
+        <%= f.label :body, t('node.comment.text') %><br/>
+    	<%= f.text_area :body, :size => '50x3' %>
+      </div>
+      <div>
+	    <%= f.hidden_field :lat %>
+	    <%= f.hidden_field :lng %>
+		<%= f.submit t('node.comment.new'), :class => 'button_comment' %>
+	  </div>
+    <% end %>
+</div>

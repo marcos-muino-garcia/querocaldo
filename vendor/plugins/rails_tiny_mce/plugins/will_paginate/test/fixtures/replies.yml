@@ -1,0 +1,44 @@
+# Copyright (C) 2010 Marcos Muíño García
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License Version 3
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+witty_retort:
+  id: 1
+  topic_id: 1
+  content: Birdman is better!
+  created_at: <%= 6.hours.ago.to_s(:db) %>
+  
+another:
+  id: 2
+  topic_id: 2
+  content: Nuh uh!
+  created_at: <%= 1.hour.ago.to_s(:db) %>
+  
+spam:
+  id: 3
+  topic_id: 1
+  content: Nice site!
+  created_at: <%= 1.hour.ago.to_s(:db) %>
+
+decisive:
+  id: 4
+  topic_id: 4
+  content: "I'm getting to the bottom of this"
+  created_at: <%= 30.minutes.ago.to_s(:db) %>
+
+brave:
+  id: 5
+  topic_id: 4
+  content: "AR doesn't scare me a bit"
+  created_at: <%= 10.minutes.ago.to_s(:db) %>

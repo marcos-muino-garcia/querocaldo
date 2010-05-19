@@ -1,0 +1,348 @@
+# Copyright (C) 2010 Marcos Muíño García
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License Version 3
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+# Galician (Spain) for Ruby on Rails
+# by Marcos Arias Pena (markus@agil-e.com)
+
+gl:
+  # action_view
+  number:
+    # Usado en number_with_delimiter()
+    format:
+      separator: ","
+      delimiter: "."
+      precision: 2
+
+    # Usado en number_to_currency()
+    currency:
+      format:
+        # %u é a unidade monetaria, %n o número
+        # 1 euro sería 1.00 €
+        format: "%n %u"
+        unit: "€"
+        separator: ","
+        delimiter: "."
+        precision: 2
+
+    # Usado en number_to_percentage()
+    percentage:
+      format:
+        # separator:
+        delimiter: ""
+        # precision:
+
+    # Usado en number_to_precision()
+    precision:
+      format:
+        # separator:
+        delimiter: ""
+        # precision:
+
+    # Usado en number_to_human_size()
+    human:
+      format:
+        # separator:
+        delimiter: ""
+        precision: 1
+      # Se estás a usar Rails <= 2.2.2
+      # storage_units: [Bytes, KB, MB, GB, TB]
+      # Se estás a usar Rails >= 2.3
+      storage_units:
+        # Formato de saida de unidades de almacenamento
+        # %u é a unidade de almacenamento
+        # %n é o número (por defecto: 2 MB)
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+
+  # active_support
+  date:
+    formats:
+      default:  "%e/%m/%Y"
+      short:    "%e %b"
+      long:     "%A %e de %B de %Y"
+      # Podes engadir máis formatos nesta lista ou cambiar os aquí definidos
+    day_names:        [Domingo, Luns, Martes, Mércores, Xoves, Venres, Sábado]
+    abbr_day_names:   [Dom, Lun, Mar, Mer, Xov, Ven, Sab]
+    month_names:      [~, Xaneiro, Febreiro, Marzo, Abril, Maio, Xuño, Xullo, Agosto, Setembro, Outubro, Novembro, Decembro]
+    abbr_month_names: [~, Xan, Feb, Mar, Abr, Mai, Xuñ, Xul, Ago, Set, Out, Nov, Dec]
+    order:            [:day, :month, :year]
+
+  time:
+    formats:
+      default:    "%A, %e de %B de %Y ás %H:%M"
+      time:       "%H:%M"
+      short:      "%e/%m, %H:%M"
+      long:       "%A %e de %B de %Y ás %H:%M"
+      # Podes engadir máis formatos nesta lista ou cambiar os aquí definidos
+    am: ""
+    pm: ""
+
+  # Usados en distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
+  datetime:
+    distance_in_words:
+      half_a_minute: "medio minuto"
+      less_than_x_seconds:
+        zero: "menos dun segundo"
+        one: "1 segundo"
+        few: "poucos segundos"
+        other: "{{count}} segundos"
+      x_seconds:
+        one: "1 segundo"
+        other: "{{count}} segundos"
+      less_than_x_minutes:
+        zero: "menos dun minuto"
+        one: "1 minuto"
+        other: "{{count}} minutos"
+      x_minutes:
+        one: "1 minuto"
+        other: "{{count}} minuto"
+      about_x_hours:
+        one: "aproximadamente unha hora"
+        other: "{{count}} horas"
+      x_days:
+        one: "1 día"
+        other: "{{count}} días"
+      x_weeks:
+        one: "1 semana"
+        other: "{{count}} semanas"
+      about_x_months:
+        one: "aproximadamente 1 mes"
+        other: "{{count}} meses"
+      x_months:
+        one: "1 mes"
+        other: "{{count}} meses"
+      about_x_years:
+        one: "aproximadamente 1 ano"
+        other: "{{count}} anos"
+      over_x_years:
+        one: "máis dun ano"
+        other: "{{count}} anos"
+      now: "agora"
+      today: "hoxe"
+      tomorrow: "mañá"
+      in: "dentro de"
+
+  support:
+    array:
+      # Se estás a usar Rails <= 2.2.2
+      # sentence_connector: e
+      # Se estás a usar Rails >= 2.3
+      words_connector: ", "
+      two_words_connector: " e "
+      last_word_connector: " e "
+
+  # active_record
+  activerecord:
+    models:
+    # Traduce nomes de modelos. Usado en Model.human_name()
+    # Por exemplo
+    # model:
+    #   user: "Nota"
+    #   traducirá o modelo User como "Nota"
+      node: "local"
+      comment: "comentario"
+
+    attributes:
+    # Traduce nomes de atributos de modelos. Usado en Model.human_attribute_name(attribute)
+    # Por exemplo
+    # attributes:
+    #   user:
+    #     login: "Aceso"
+    #     traducirá o atribute login do modelo User como "Aceso"
+      node:
+        title: "nome"
+        lat: "latitude"
+        lng: "lonxitude"
+        summary: "resumo"
+        body: "páxina"
+        type: "tipo de local"
+        accept_terms: "termos de licencia"
+      comment:
+        user_name: "usuario"
+        user_mail: "correo electrónico"
+        body: "texto"
+
+    errors:
+      template:
+        header:
+          one: "1 erro evitou que se poidese gardar o {{model}}"
+          other: "{{count}} erros evitaron que se poidese gardar o {{model}}"
+        # A variable :count tamén está dispoñible aquí
+        body: "Atopáronse os seguintes problemas:"
+      messages:
+        inclusion: "non está incluido na lista"
+        exclusion: "xa existe"
+        invalid: "non é válido"
+        confirmation: "non coincide coa confirmación"
+        accepted: "debe ser aceptado"
+        empty: "non pode estar valeiro"
+        blank: "non pode estar en blanco"
+        too_long: "é demasiado longo (non máis de {{count}} carácteres)"
+        too_short: "é demasiado curto (non menos de {{count}} carácteres)"
+        wrong_length: "non ten a lonxitude correcta (debe ser de {{count}} carácteres)"
+        taken: "non está dispoñible"
+        not_a_number: "non é un número"
+        greater_than: "debe ser maior que {{count}}"
+        greater_than_or_equal_to: "debe ser maior ou igual que {{count}}"
+        equal_to: "debe ser igual a {{count}}"
+        less_than: "debe ser menor que {{count}}"
+        less_than_or_equal_to: "debe ser menor ou igual que {{count}}"
+        odd: "debe ser par"
+        even: "debe ser impar"
+        record_invalid: "non é válido"
+        # Engade aquí os teus propios mensaxes de erro ou no ámbito modelo/atributo
+
+        # Podes definir os teus propios erros para modelos ou para os atributos dun modelo
+        # Os valores :model, :attribute e :value están sempre dispoñibles para a interpolación
+        #
+        # Exemplos avanzados
+        # models:
+        #   user:
+        #     blank: "Esta é unha mensaxe personalizada para o modelo {{model}}: {{attribute}}"
+        #     attributes:
+        #       login:
+        #         blank: "Esta é unha mensaxe personalidaza para o modelo Usuario: login"
+
+
+# APPLICATION'S MENSSAGES
+  this_file_language: "Galego"
+
+  head:
+    title: "Quero Caldo"
+    description: "Quero Caldo é unha aplicación de xeolocalización de locais que teñen algún tipo de relación con Galicia"
+    keywords: "Quero Caldo Galicia Galiza mapa map maps bar restaurante centro galego gallego grelos repolo polbo pulpo estrella"
+
+  home:
+    title: "QueroCaldo.org"
+    nearest_info: "Estás a {{distance}} de poder saciar a túa morriña.<br/>O teu local máis cercano é {{title}}"
+    info:
+      title: "info"
+      content1: "Grazas a <b>Quero Caldo</b> poderás atopar os locais espallados polo mundo que gardan relación con Galicia"
+      content2: "A utilidade pode ser dende buscar <i>polbo á feira</i>, ata caldo galego, pasando por suposto pola nosa cervexa universal"
+      content3: "Se es propietario dun local xa dado de alta, podes informar ós teus clientes co noso "
+      flyer: "cartel publicitario"
+    map:
+      distance_alert: "As distancias mostradas dependen da localización do teu provedor de internet, polo que poden non ser do todo exactas"
+      popup:
+        pre: "Atópaste a"
+        post: "deste lugar"
+        details: "Ver detalles"
+        user: "Esta é a túa posición"
+      alert:
+        address_not_found:
+          pre: "Non se atopou a dirección"
+          post: ". Lembra que tes que dar unha dirección o máis completa posible (p. ex. Concepción Arenal, Coruña)"
+    last_nodes: "Últimos locais"
+    comments: "Comentarios dos visitantes"
+
+  comments:
+    title: "Últimos comentarios"
+
+  contact:
+    title: "Contacto"
+    content: "Podesnos facer chegar calquera comentario, suxerencia, crítica, ou cousa que se che pase pola cabeza, á dirección {{email}}, ou utilizando o seguinte formulario:"
+    mail_sent: "Mensaxe enviado correctamente. En breve recibirá resposta do equipo de QueroCaldo.com"
+
+  email:
+    name: "Nome"
+    address: "Correo electrónico"
+    subject: "Asunto"
+    body: "Texto"
+    send: "Enviar"
+
+  more_info: "+info"
+  show_in_map: "Centrar mapa"
+
+  browser:
+    no_compatible:
+        map: "O teu navegador non soporta Google Maps."
+        geolocation: "O teu navegador non soporta xeolocalización, polo que non poderás desfrutar de todas as vantaxes da web."
+    recomentation: "Recomendámosche a utilización das últimas versións de <a href='http://www.mozilla.com/firefox.html'>Mozilla Firefox</a> ou <a href='http://www.google.com/chrome'>Google Chrome</a>"
+
+  menu:
+    home: "Comezo"
+    node:
+      add: "Novo local"
+    contact: "Contacto"
+
+  footer:
+    copyright: "Quero Caldo 2010"
+
+  node:
+    add:
+      title: "Engadir local"
+      info: "Cumplimenta os datos do local para que pase a estar no sistema"
+      language: "Para tratar de manter unha uniformidade nos contidos da aplicación, recomendase empregar a lingua galega neste formulario de alta"
+    edit:
+      title: "Editar local"
+      info: "Modifica os datos do local para actualizalo no sistema"
+    list:
+      title: "Listado de locales"
+    destroy:
+      title: "Eliminar local"
+    clean_map: "Limpar a seleción"
+    search: "Buscar"
+    title: "Nome do local"
+    summary: "Indica un resumo do local"
+    body: "Páxina do local"
+    position: "Posiciona o local"
+    save: "Gardar"
+    type:
+      title: "Tipo de local"
+      pub: "Cervecería"
+      restaurant: "Restaurante"
+      galician_center: "Centro galego"
+    comments: "Comentarios"
+    comment:
+      new: "Deixa un comentario"
+      text: "Texto"
+      user:
+        name: "Nome"
+        address: "Correo electrónico (opcional)"
+    share: "Comparte esta páxina na web"
+    show_sample:
+      title: "Ver páxina de exemplo"
+      head: "Para crear a páxina, pódes empregar fotos, videos, enlaces, listas,... Deixa voar a túa creatividade para que QueroCaldo.org sexa mellor!"
+  comment:
+    ago: "Engadido por <b>{{visitor}}</b> fai {{posted_ago}}"
+    where: "a {{distance}} do local"
+
+  rss:
+    title: "QueroCaldo.org"
+    description: "Grazas a <b>Quero Caldo</b> poderás atopar os locais espallados polo mundo que gardan relación con Galicia"
+
+  terms:
+    creative_commons:
+      p1: "O usuario asume a propiedade (ou en calquera caso, que posúe autorización do autor) de todo o contido e a información que publica nesta Web, entendendo que os traballos que suba a QueroCaldo.org foron rexistrados previamente nas oficinas habilitadas polos órganos competentes. Por conseguinte, QueroCaldo.org nin aproba, nin fai seus os produtos, servizos, contidos, información, datos, opinións arquivos e calquera clase de material existente na web."
+      p2: "Se O USUARIO recompila información doutros usuarios deberá obter o seu consentimento previo, deixar claro que é o propio usuario (e non QueroCaldo.org) quen recompila a información, e publicar unha política de privacidade que explique que datos recompilou e como os vai usar."
+      p3: "QueroCaldo.org esixe que nos contidos non aparezan menores de idade. Naqueles casos excepcionais onde aparezan menores de idade o usuario deberá ter o consentimento expreso dos seus pais ou representantes legais."
+      p4: "QueroCaldo.org resérvase o dereito de vetar a entrada a calquera suxeito á web http://www.QueroCaldo.org e á súa vez resérvase o dereito de prohibir o uso de calquera programa e/ou información, en concordancia cos dereitos de autor outorgados polo artigo 14 LPI."
+      p5: "Aceptando estes termos legais O USUARIO concede a QueroCaldo.org unha licenza non exclusiva, transferible, con posibilidade de ser sub-outorgada, sen royalties, aplicable globalmente, a utilizar todo o material que crea necesario existente no portal para promoción do mesmo respectando sempre a Lei Orgánica de protección de datos persoais 13/1999 e informando previamente á persoa que subise cada contido."
+      p6: "A cesión destes dereitos será para a súa publicación e explotación, rexéndose en todo caso polos termos da licenza \"Creative Commons Attribution - Share Alike 3.0\", segundo o ámbito de aplicación estipulado en http://creativecommons.org/licenses/by-sa/3.0/deed.gl"
+    accept: "Acepto os"
+    title: "Termos de Uso"
+
+  confirmation_question: "Estás seguro?"
+  edit: "Editar"
+  destroy: "Eliminar"
+  close: "Cerrar"
+  download: "Descargar"
